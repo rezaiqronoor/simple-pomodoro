@@ -1,4 +1,4 @@
-import React, {  useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HomeComponent } from "../components/Home";
 import notificationSound from "../sounds/notification.wav";
 
@@ -6,9 +6,15 @@ const Home = () => {
    const [initialCountdown, setInitialCountdown] = useState("25:00");
    const [countdown, setCountdown] = useState("25:00");
    const [pomodoroStep, setPomodoroStep] = useState(0); // 1-4
-   const [pomodoroMode, setPomodoroMode] = useState("long_break"); // focus, short_break, long_break
+   const [pomodoroMode, setPomodoroMode] = useState("focus"); // focus, short_break, long_break
    const [pomodoroState, setPomodoroState] = useState("stop"); // start, pause, stop
    const countdownRef = useRef(null);
+
+   useEffect(() => {
+      const notification = new Audio(notificationSound);
+      notification.muted = true;
+      notification.play();
+   }, []);
 
    if (pomodoroState === "start") {
       clearInterval(countdownRef.current);
@@ -39,12 +45,15 @@ const Home = () => {
             notification.play();
 
             setPomodoroState("stop");
-            
-            if(pomodoroMode === "focus") setPomodoroStep(pomodoroStep + 1);
-            else if(pomodoroMode === "long_break" && pomodoroStep === 4) setPomodoroStep(0);
 
-            if(pomodoroStep < 3 && pomodoroMode === "focus" ) handlePomodoroMode("short_break");
-            else if(pomodoroStep === 3 && pomodoroMode === "focus" ) handlePomodoroMode("long_break");
+            if (pomodoroMode === "focus") setPomodoroStep(pomodoroStep + 1);
+            else if (pomodoroMode === "long_break" && pomodoroStep === 4)
+               setPomodoroStep(0);
+
+            if (pomodoroStep < 3 && pomodoroMode === "focus")
+               handlePomodoroMode("short_break");
+            else if (pomodoroStep === 3 && pomodoroMode === "focus")
+               handlePomodoroMode("long_break");
             else handlePomodoroMode("focus");
 
             return "25:00";
@@ -79,25 +88,25 @@ const Home = () => {
    const handlePomodoroMode = (mode) => {
       switch (mode) {
          case "focus":
-               setPomodoroMode("focus");
-               setCountdown("25:00");
-               setInitialCountdown("25:00");
-               setPomodoroState("stop");
-               clearInterval(countdownRef.current);
+            setPomodoroMode("focus");
+            setCountdown("25:00");
+            setInitialCountdown("25:00");
+            setPomodoroState("stop");
+            clearInterval(countdownRef.current);
             break;
          case "short_break":
-               setPomodoroMode("short_break");
-               setCountdown("05:00");
-               setInitialCountdown("05:00");
-               setPomodoroState("stop");
-               clearInterval(countdownRef.current);
+            setPomodoroMode("short_break");
+            setCountdown("05:00");
+            setInitialCountdown("05:00");
+            setPomodoroState("stop");
+            clearInterval(countdownRef.current);
             break;
          case "long_break":
-               setPomodoroMode("long_break");
-               setCountdown("15:00");
-               setInitialCountdown("15:00");
-               setPomodoroState("stop");
-               clearInterval(countdownRef.current);
+            setPomodoroMode("long_break");
+            setCountdown("15:00");
+            setInitialCountdown("15:00");
+            setPomodoroState("stop");
+            clearInterval(countdownRef.current);
             break;
          default: // do nothing.
       }
