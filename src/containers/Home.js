@@ -4,8 +4,8 @@ import notificationSound from "../sounds/notification.wav";
 
 const Home = () => {
    const [initialCountdown, setInitialCountdown] = useState("25:00");
-   const [countdown, setCountdown] = useState("00:01");
-   const [pomodoroStep, setPomodoroStep] = useState(4); // 1-4
+   const [countdown, setCountdown] = useState("25:00");
+   const [pomodoroStep, setPomodoroStep] = useState(0); // 1-4
    const [pomodoroMode, setPomodoroMode] = useState("long_break"); // focus, short_break, long_break
    const [pomodoroState, setPomodoroState] = useState("stop"); // start, pause, stop
    const countdownRef = useRef(null);
