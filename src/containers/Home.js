@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { HomeComponent } from "../components/Home";
+import notificationSound from "../sounds/notification.wav";
 
 const Home = () => {
    const [initialCountdown, setInitialCountdown] = useState("25:00");
-   const [countdown, setCountdown] = useState("00:05");
+   const [countdown, setCountdown] = useState("25:00");
    const [pomodoroStep, setPomodoroStep] = useState(0); // 1-4
    const [pomodoroMode, setPomodoroMode] = useState("focus"); // focus, short_break, long_break
    const [pomodoroState, setPomodoroState] = useState("stop"); // start, pause, stop
@@ -34,8 +35,16 @@ const Home = () => {
                Number(times[1] - 1)
             );
          } else if (times[0] === "00" && times[1] === "00") {
+            const notification = new Audio(notificationSound);
+            notification.play();
+
             setPomodoroState("stop");
             setPomodoroStep(pomodoroStep + 1);
+
+            if(pomodoroStep < 3 ) handlePomodoroMode("short_break");
+            else if(pomodoroStep === 3 ) handlePomodoroMode("long_break");
+            else handlePomodoroMode("focus");
+
             return "25:00";
          }
       });
