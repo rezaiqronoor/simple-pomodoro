@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 import { HomeComponent } from "../components/Home";
 import notificationSound from "../sounds/notification.wav";
 
@@ -69,6 +69,7 @@ const Home = () => {
             break;
          case "pomodoroState":
             setPomodoroState(payload.state);
+            break;
          default: // do nothing
       }
    };
@@ -76,31 +77,25 @@ const Home = () => {
    const handlePomodoroMode = (mode) => {
       switch (mode) {
          case "focus":
-            {
                setPomodoroMode("focus");
                setCountdown("25:00");
                setInitialCountdown("25:00");
                setPomodoroState("stop");
                clearInterval(countdownRef.current);
-            }
             break;
          case "short_break":
-            {
                setPomodoroMode("short_break");
                setCountdown("05:00");
                setInitialCountdown("05:00");
                setPomodoroState("stop");
                clearInterval(countdownRef.current);
-            }
             break;
          case "long_break":
-            {
                setPomodoroMode("long_break");
                setCountdown("15:00");
                setInitialCountdown("15:00");
                setPomodoroState("stop");
                clearInterval(countdownRef.current);
-            }
             break;
          default: // do nothing.
       }
