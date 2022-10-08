@@ -125,10 +125,10 @@ const HomeComponent = ({
                   </VStack>
                   {renderPomodoroProgressBar(pomodoroStep)};
                </HStack>
-               <HStack w={"full"} justifyItems={"space-between"}>
-                  <Button onClick={() => onClick("settings")} w={"full"}>
+               <Center w={"full"} justifyItems={"space-between"}>
+                  {/* <Button onClick={() => onClick("settings")} w={"full"}>
                      Settings
-                  </Button>
+                  </Button> */}
                   <Button
                      onClick={() =>
                         onClick(
@@ -148,10 +148,10 @@ const HomeComponent = ({
                         ? "Start"
                         : "Pause"}
                   </Button>
-                  <Button onClick={() => onClick("skip")} w={"full"}>
+                  {/* <Button onClick={() => onClick("skip")} w={"full"}>
                      Skip
-                  </Button>
-               </HStack>
+                  </Button> */}
+               </Center>
             </VStack>
          </Flex>
       </Container>
