@@ -4,9 +4,9 @@ import notificationSound from "../sounds/notification.wav";
 
 const Home = () => {
    const [initialCountdown, setInitialCountdown] = useState("25:00");
-   const [countdown, setCountdown] = useState("25:00");
-   const [pomodoroStep, setPomodoroStep] = useState(0); // 1-4
-   const [pomodoroMode, setPomodoroMode] = useState("focus"); // focus, short_break, long_break
+   const [countdown, setCountdown] = useState("00:01");
+   const [pomodoroStep, setPomodoroStep] = useState(4); // 1-4
+   const [pomodoroMode, setPomodoroMode] = useState("long_break"); // focus, short_break, long_break
    const [pomodoroState, setPomodoroState] = useState("stop"); // start, pause, stop
    const countdownRef = useRef(null);
 
@@ -39,10 +39,12 @@ const Home = () => {
             notification.play();
 
             setPomodoroState("stop");
-            setPomodoroStep(pomodoroStep + 1);
+            
+            if(pomodoroMode === "focus") setPomodoroStep(pomodoroStep + 1);
+            else if(pomodoroMode === "long_break" && pomodoroStep === 4) setPomodoroStep(0);
 
-            if(pomodoroStep < 3 ) handlePomodoroMode("short_break");
-            else if(pomodoroStep === 3 ) handlePomodoroMode("long_break");
+            if(pomodoroStep < 3 && pomodoroMode === "focus" ) handlePomodoroMode("short_break");
+            else if(pomodoroStep === 3 && pomodoroMode === "focus" ) handlePomodoroMode("long_break");
             else handlePomodoroMode("focus");
 
             return "25:00";
